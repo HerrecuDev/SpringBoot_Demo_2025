@@ -8,6 +8,7 @@ class SprintBootDemo2025ApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println();
     }
 
 }
