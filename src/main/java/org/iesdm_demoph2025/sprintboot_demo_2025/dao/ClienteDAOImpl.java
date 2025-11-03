@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,42 @@ public class ClienteDAOImpl implements ClienteDAO{
 
     @Override
     public void create(Cliente cliente) {
+
+        String sql = """
+                insert into cliente (nombre, apellido1, apellido2, ciudad, categoría)
+                values (                  ?,         ?,         ?,       ?,         ?);
+                
+                
+                """;
+
+    /*
+        jdbcTemplate.update(sql ,
+                                cliente.getNombre(),
+                                cliente.getApellido1(),
+                                cliente.getApellido2(),
+                                cliente.getCiudad(),
+                                cliente.getCategoria());
+    */
+
+/*Usando el valor del ID :*/
+        String[] ids = {"id"};
+
+                KeyHolder keyolder = new GeneratedKeyHolder();
+                jdbcTemplate.update(con -> {
+
+                    PreparedStatement ps  = con.prepareStatement(sql , ids);
+
+                    ps.setString(1 , cliente.getNombre());
+                    ps.setString(2 , cliente.getApellido1());
+                    ps.setString(3 , cliente.getApellido2());
+                    ps.setString(4 , cliente.getCiudad());
+                    ps.setInt(5 , (cliente.getCategoria()));
+
+                    return ps;
+
+                }, keyolder);
+
+                cliente.setId((int)keyolder.getKey().intValue());
 
     }
 

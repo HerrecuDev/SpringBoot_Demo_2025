@@ -1,5 +1,6 @@
 package org.iesdm_demoph2025.sprintboot_demo_2025;
 
+import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ClienteDAO;
 import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ClienteDAOImpl;
 import org.iesdm_demoph2025.sprintboot_demo_2025.model.Cliente;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,28 @@ class SprintBootDemo2025ApplicationTests {
         }else{
             System.out.println("VACIOOO!!!");
         }
+    }
+
+
+    @Test
+
+    void testCreate(){
+        Cliente cliente = Cliente.builder().nombre("José")
+                .apellido1("Martin")
+                .apellido2("Tejero")
+                .ciudad("Malaga")
+                .categoria(1)
+                .build();
+
+        System.out.println("Antes de crear el id " + cliente.getId());
+
+        clienteDAOImpl.create(cliente);
+
+        System.out.println("Despues de crear el id " + cliente.getId());
+
+
+
+
     }
 
 }
