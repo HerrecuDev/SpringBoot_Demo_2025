@@ -35,7 +35,7 @@ public class ClienteDAOImpl implements ClienteDAO{
     public void create(Cliente cliente) {
 
         String sql = """
-                insert into cliente (nombre, apellido1, apellido2, ciudad, categoría)
+                insert into cliente (nombre, apellido1, apellido2, ciudad, categoria)
                 values (                  ?,         ?,         ?,       ?,         ?);
                 
                 
@@ -77,7 +77,7 @@ public class ClienteDAOImpl implements ClienteDAO{
 
         List<Cliente> listClientes = jdbcTemplate.query("""
                                 select *
-                                                from cliente c
+                                from cliente c
                                 
                         """,
                         ( rs , rowNum) -> new Cliente(
@@ -87,7 +87,7 @@ public class ClienteDAOImpl implements ClienteDAO{
                                 rs.getString("apellido1"),
                                 rs.getString("apellido2"),
                                 rs.getString("ciudad"),
-                                rs.getInt("categoría")
+                                rs.getInt("categoria")
                                 )
 
         );
@@ -113,7 +113,7 @@ public class ClienteDAOImpl implements ClienteDAO{
                             .apellido1(rs.getString("apellido1"))
                             .apellido2(rs.getString("apellido2"))
                             .ciudad(rs.getString("ciudad"))
-                            .categoria(rs.getInt("categoría"))
+                            .categoria(rs.getInt("categoria"))
                             .build()
 
                     ,
@@ -129,11 +129,37 @@ public class ClienteDAOImpl implements ClienteDAO{
     @Override
     public void update(Cliente cliente) {
 
+       int roswUpdated = jdbcTemplate.update("""               
+                UPDATE cliente
+                SET nombre = ? ,apellido1 = ? , apellido2 = ? ,ciudad = ?, categoria = ?
+                WHERE id = ?
+                """
+                , cliente.getNombre()
+                ,cliente.getApellido1()
+                , cliente.getApellido2()
+                ,cliente.getCiudad()
+                ,cliente.getCategoria()
+                , cliente.getId());
+
+
+        log.debug("Filas actualizadas {}" , roswUpdated);
+
 
     }
 
     @Override
     public void delete(int id) {
+
+        int roswUpdated = jdbcTemplate.update("""
+                DELETE FROM cliente
+                
+                WHERE id = ?
+
+                """
+                , id);
+
+
+        log.debug("Filas actualizadas {}" , roswUpdated);
 
     }
 }
