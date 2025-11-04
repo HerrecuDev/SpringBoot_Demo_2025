@@ -1,18 +1,18 @@
 package org.iesdm_demoph2025.sprintboot_demo_2025.dao;
 
-import org.iesdm_demoph2025.sprintboot_demo_2025.model.Cliente;
+import org.iesdm_demoph2025.sprintboot_demo_2025.model.Comercial;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ComercialDAO {
 
-    void create(Cliente cliente);
+    void create(Comercial comercial);
 
-    List<Cliente> getAll();
-    Optional<Cliente> find(int id);
+    List<Comercial> getAll();
+    Optional<Comercial> find(int id);
 
-    void update(Cliente cliente);
+    void update(Comercial comercial);
 
     void delete(int id);
 }
