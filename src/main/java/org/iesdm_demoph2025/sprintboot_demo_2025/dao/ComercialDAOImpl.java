@@ -31,7 +31,7 @@ public class ComercialDAOImpl implements ComercialDAO{
     public void create(Comercial comercial) {
 
         String sql = """
-                insert into cliente (nombre, apellido1, apellido2, comision)
+                insert into comercial (nombre, apellido1, apellido2, comision)
                 values (                  ?,         ?,         ?,         ?);
                 
                 
@@ -40,9 +40,9 @@ public class ComercialDAOImpl implements ComercialDAO{
         String[] ids = {"id"};
 
         KeyHolder keyolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(con -> {
+        jdbcTemplate.update(comer -> {
 
-            PreparedStatement ps  = con.prepareStatement(sql , ids);
+            PreparedStatement ps  = comer.prepareStatement(sql , ids);
 
             ps.setString(1 , comercial.getNombre());
             ps.setString(2 , comercial.getApellido1());

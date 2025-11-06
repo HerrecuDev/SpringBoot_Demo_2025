@@ -2,7 +2,9 @@ package org.iesdm_demoph2025.sprintboot_demo_2025;
 
 import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ClienteDAO;
 import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ClienteDAOImpl;
+import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ComercialDAOImpl;
 import org.iesdm_demoph2025.sprintboot_demo_2025.model.Cliente;
+import org.iesdm_demoph2025.sprintboot_demo_2025.model.Comercial;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ class SprintBootDemo2025ApplicationTests {
 
     @Autowired
     private ClienteDAOImpl clienteDAOImpl;
+    @Autowired
+    private ComercialDAOImpl comercialDAOImpl;
 
 
     //SPring es un framework de Inyección de dependencias e Inversion de Control
@@ -117,6 +121,103 @@ class SprintBootDemo2025ApplicationTests {
         Optional<Cliente> optionalClienteReal = clienteDAOImpl.find(cliente.getId());
 
         Assertions.assertTrue(optionalClienteReal.isEmpty());
+
+
+    }
+
+
+
+
+    //Test para COMERCIAL :
+    @Test
+    void testGetAllComercial(){
+
+        List<Comercial> list = comercialDAOImpl.getAll();
+
+        list.forEach(System.out::println);
+
+    }
+
+    @Test
+    void tetsFindComercial(){
+
+        Optional<Comercial> optionalComercial = comercialDAOImpl.find(11);
+
+        if (optionalComercial.isPresent()){
+            System.out.println(optionalComercial.get());
+        }else{
+            System.out.println("VACIOOO!!!");
+        }
+    }
+
+
+    @Test
+
+    void testCreateComercial(){
+        Comercial comercial = Comercial.builder().nombre("Pablo Jose")
+                .apellido1("Herrera")
+                .apellido2("Cuevas")
+                .comision(0.20f)
+                .build();
+
+        System.out.println("Antes de crear el id " + comercial.getId());
+
+        comercialDAOImpl.create(comercial);
+
+        System.out.println("Despues de crear el id " + comercial.getId());
+
+
+
+
+    }
+
+    @Test
+    void testUpdateComercial(){
+
+        Comercial comercial = Comercial.builder().nombre("Pablo Jose")
+                .apellido1("Herrera")
+                .apellido2("Cuevas")
+                .comision(0.20f)
+                .build();
+
+
+        comercialDAOImpl.create(comercial);
+        comercial.setNombre("Pablo Jose");
+        comercialDAOImpl.update(comercial);
+
+        Optional<Comercial> optionalComercialReal = comercialDAOImpl.find(comercial.getId());
+
+        if (optionalComercialReal.isPresent()){
+            Assertions.assertEquals("Pablo Jose" , optionalComercialReal.get().getNombre());
+        }
+        else{
+            Assertions.fail();
+        }
+
+
+    }
+
+
+
+
+    @Test
+    void testDeleteComercial(){
+
+        Comercial comercial = Comercial.builder().nombre("Pablo Jose")
+                .apellido1("Herrera")
+                .apellido2("Cuevas")
+                .comision(0.20f)
+                .build();
+
+        comercialDAOImpl.create(comercial);
+
+        comercialDAOImpl.delete(comercial.getId());
+
+
+
+        Optional<Comercial> optionalComercialReal = comercialDAOImpl.find(comercial.getId());
+
+        Assertions.assertTrue(optionalComercialReal.isEmpty());
 
 
     }

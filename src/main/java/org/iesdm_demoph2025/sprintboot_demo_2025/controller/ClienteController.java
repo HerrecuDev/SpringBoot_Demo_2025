@@ -27,9 +27,5 @@ public class ClienteController {
 
         return "clientes";
 
-
-
-
-
     }
 }
