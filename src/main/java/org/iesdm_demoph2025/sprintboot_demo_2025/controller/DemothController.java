@@ -64,5 +64,23 @@ public class DemothController {
     }
 
 
+    @GetMapping("/demoth5")
 
+        public String demoth5(Model model){
+
+        Cliente cliente = Cliente.builder()
+                .id(101)
+                .nombre("Cervantes")
+                .build();
+
+        model.addAttribute("cliente" , cliente);
+        return "plantilla5";
+
+
+        }
 }
+
+
+
+
+

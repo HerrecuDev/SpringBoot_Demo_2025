@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Plantilla 5</title>
+</head>
+<body>
+    <a th:href="@{/registrar}" th:text="Registrar cliente"></a>
+
+    <br>
+    <a th:href="@{/cliente(id=${cliente.id} , nombre=${cliente.nombre})}"
+       th:text="Ir a cliente + ${cliente.nombre}"></a>
+
+    <br/>
+
+    <a th:href="@{/cliente{id}/editar(id=${cliente.id}, nombre=${cliente.nombre})}"
+       th:text="Editar a cliente + ${cliente.nombre}"></a>
+</body>
+</html>
