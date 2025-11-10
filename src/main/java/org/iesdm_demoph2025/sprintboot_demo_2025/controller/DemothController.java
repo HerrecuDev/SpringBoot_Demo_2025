@@ -73,6 +73,8 @@ public class DemothController {
                 .nombre("Cervantes")
                 .build();
 
+
+
         model.addAttribute("cliente" , cliente);
         return "plantilla5";
 
