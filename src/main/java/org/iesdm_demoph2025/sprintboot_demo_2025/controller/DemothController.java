@@ -1,15 +1,24 @@
 package org.iesdm_demoph2025.sprintboot_demo_2025.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ClienteDAO;
+import org.iesdm_demoph2025.sprintboot_demo_2025.dao.ClienteDAOImpl;
 import org.iesdm_demoph2025.sprintboot_demo_2025.model.Cliente;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
 @Controller
 public class DemothController {
+    private final ClienteDAOImpl clienteDAOImpl;
+
+    public DemothController(ClienteDAOImpl clienteDAOImpl) {
+        this.clienteDAOImpl = clienteDAOImpl;
+    }
 
     //SIn service , solo activar sobre Plantillas HTML
 
@@ -79,6 +88,38 @@ public class DemothController {
         return "plantilla5";
 
 
+        }
+
+        @GetMapping("/demoth/crear")
+
+        public String demothCrear(Model model){
+
+            Cliente cliente = new Cliente();
+            model.addAttribute("cliente" , cliente);
+
+            return "demoth-crear";
+
+        }
+
+        @Autowired
+        private ClienteDAO clienteDAO;
+
+        @GetMapping("/demoth/crear")
+
+        public String demothCrearSubmit(@ModelAttribute Cliente cliente){
+
+            clienteDAOImpl.create(cliente);
+
+            return "redirect:/demoth/listar";
+        }
+
+        @GetMapping("/demoth/listar")
+
+        public String demothListar(Model model){
+
+            model.addAttribute("clientes" , clienteDAO.getAll());
+
+            return "demoth-listar";
         }
 }
 
